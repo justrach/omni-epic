@@ -13,7 +13,7 @@ const icons = [
   // { IconComponent: VideoIcon, label: 'Video', href: '', target: '_blank' },
   { IconComponent: CodeIcon, label: 'Code (Coming soon)', href: '', target: '_blank' },
   // { IconComponent: DatabaseIcon, label: 'Data', href: '', target: '_blank' },
-  { IconComponent: XIcon, label: 'Tweet', href: 'https://x.com/jeffclune/status/1795780538982138247', target: '_blank' },
+  { IconComponent: XIcon, label: 'Tweet', href: 'https://twitter.com/jeffclune/status/1795787632435212732', target: '_blank' },
   { IconComponent: IoGameController, label: 'Play it yourself! (Coming soon)', href: '#game-interface', target: '_self' },
 ];
 
