@@ -207,7 +207,7 @@ export function AcademicPage() {
           <div className="max-w-3xl mx-auto space-y-8">
                 <p className="text-gray-900 dark:text-gray-400 leading-relaxed">
               The website template was made by <a href="https://www.rach.codes/" className='text-blue-400'>Rach Pradhan</a> and <a href="https://www.jennyzhangzt.com/" className='text-blue-400'>Jenny Zhang</a>.
-              In order to use the template please check it out at <a href="https://github.com/justrach/omni-epic" className='text-blue-400'>this github link</a> and give credit to the original author(s).
+              In order to use the template please check it out at <a href="https://github.com/justrach/omni-epic" className='text-blue-400'>this github link</a>.
             </p>
           </div>
         </div>
