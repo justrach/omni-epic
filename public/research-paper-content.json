@@ -1,0 +1,58 @@
+{
+    "abstract": "Open-ended and AI-generating algorithms aim to continuously \\emph{generate} and \\emph{solve} increasingly complex tasks indefinitely, offering a promising path toward more general intelligence. To accomplish this grand vision, learning must occur within a vast array of potential tasks. Existing approaches to automatically generating environments are constrained within manually predefined, often narrow distributions of environment, limiting their ability to create \\emph{any} learning environment. To address this limitation, we introduce a novel framework, OMNI-EPIC, that augments previous work in Open-endedness via Models of human Notions of Interestingness (OMNI) with Environments Programmed in Code (EPIC). OMNI-EPIC leverages foundation models to autonomously generate code specifying the next learnable (i.e., not too easy or difficult for the agent's current skill set) and interesting (e.g., worthwhile and novel) tasks. OMNI-EPIC generates both environments (e.g., an obstacle course) and reward functions (e.g., progress through the obstacle course quickly without touching red objects), enabling it, in principle, to create any simulatable learning task. We showcase the explosive creativity of OMNI-EPIC, which continuously innovates to suggest new, interesting learning challenges. We also highlight how OMNI-EPIC can adapt to reinforcement learning agents' learning progress, generating tasks that are of suitable difficulty. Overall, OMNI-EPIC can endlessly create learnable and interesting environments, further propelling the development of self-improving AI systems and AI-Generating Algorithms.",
+    "citations": [
+      {
+        "id": "1",
+        "text": "@misc{faldor2024omniepic,\ntitle={OMNI-EPIC: Open-endedness via Models of human Notions of Interestingness with Environments Programmed in Code},\nauthor={Maxence Faldor and Jenny Zhang and Antoine Cully and Jeff Clune},\nyear={2024},\neprint={2405.15568},\narchivePrefix={arXiv},\nprimaryClass={cs.AI}\n}"
+      }
+    ],
+    "sections": [
+      {
+        "title": "",
+        "content": "",
+        "video": {
+          "alt": "",
+          "src": "https://documents.paperstowebsite.com/trailer.mp4"
+        }
+      },
+      {
+        "title": "Short Run with Learning",
+        "content": "To demonstrate OMNI-EPIC's ability to generate tasks of suitable difficulty for training RL agents, we conducted a run with RL agent training. OMNI-EPIC leverages previously learned tasks as <strong>stepping stones</strong> to generate and master more challenging tasks. This iterative process allows RL agents to build upon existing skills to tackle increasingly complex environments.",
+        "video": {
+          "alt": "OMNI-EPIC adapts to the current capabilities of trained RL agents, generating tasks that are both interesting and learnable. Tasks deemed interesting that are successfully learned are marked by a check and failures by a cross. Uninteresting tasks are not trained on and hence not included here. Arrows between tasks indicate instances where OMNI-EPIC modified a task that the RL agent failed to learn, adjusting the task difficulty to facilitate learning.",
+          "src": "https://documents.paperstowebsite.com/short_run.mp4"
+        }
+      },
+      {
+        "title": "Method",
+        "content": "OMNI-EPIC leverages FMs, including large language models (LLMs) and vision-language models (VLMs), to autonomously create an endless stream of learnable and interesting tasks for open-ended learning. OMNI-EPIC maintains a growing \\textbf{task archive} that catalogs successfully learned and completed tasks, as well as unsuccessfully attempted ones. The <strong>task generator</strong> uses information from the archive about what has been learned and what has not, proposing the next new task, described in natural language, for the agent to attempt. These tasks are then translated into environment code by an <strong>environment generator</strong>, specifying the simulated world and functions required for RL. The newly generated task and its environment code are assessed by a <strong>model of interestingness</strong>, which emulates human capacity for nuanced judgments of interestingness in open-ended learning, to determine if the task is indeed interesting. Tasks deemed interesting are then used to <strong>train an RL agent</strong>. If deemed uninteresting, the task is discarded, and a new task is generated. After training, a <strong>success detector</strong> assesses whether the agent has successfully completed the task. Successfully completed tasks are added to the archive. Failed tasks are iterated upon a maximum number of times and added to the archive as failed tasks if the RL agents are not able to solve them. Then, the cycle of generating the next task restarts. OMNI-EPIC's iterative process ensures continuous generation and learning of new interesting tasks, forming a never-ending, growing collection of environments and learned agents.",
+        "image": {
+          "alt": "",
+          "src": "/images/architecture.svg"
+        }
+      },
+      {
+        "title": "Long Run with Simulated Learning",
+        "content": "To illustrate the creative explosion of generated tasks, we run OMNI-EPIC without training RL agents, assuming all generated tasks can be successfully completed. OMNI-EPIC generates tasks that significantly diverge from the seed tasks used to initialize the archive. OMNI-EPIC not only <strong>explores different task niches</strong> (e.g., navigating across different terrains vs. retrieving objects) but also generates <strong>interesting variations within each niche</strong> (e.g., retrieving objects in different simulated world settings).<br><br><strong>Explore the \\underline{interactive} graph below!</strong>",
+        "html": {
+          "alt": "OMNI-EPIC generates a diverse array of tasks, ranging from wildly different objectives to interesting variations of similar overarching tasks. The node color reflects the generation number of the task. A check mark in the node means that the task was successfully learned. A ZZZ symbol means that the task was deemed uninteresting and discarded. The node connections illustrate which tasks were conditioned on when asking an FM to generate a similar yet new and interesting task. Grey nodes show task description seeds that initialized the run.",
+          "src": "/htmls/long_run.html",
+          "height": "900px"
+        }
+      },
+      {
+        "title": "",
+        "content": "<strong>Example generated tasks (scroll left and right to view more)</strong>",
+        "longRunTask": true
+      },
+      {
+        "title": "Conclusion",
+        "content": "In conclusion, OMNI-EPIC represents a leap towards open-ended learning by generating an endless stream of learnable and interesting tasks. Intriguingly, it also provides a new way of creating human entertainment and educational resources by offering a limitless supply of engaging challenges. OMNI-EPIC could potentially be applied in myriad ways, covering anything from math problems and poetry challenges to games and virtual worlds. By leveraging FMs to create tasks and environment code, OMNI-EPIC opens up a vast space of possibilities for AI and human agents to explore and master. By combining that expressive power with human notions of interestingness, OMNI-EPIC presents a promising path towards the development of truly open-ended and creative AI."
+      },
+      {
+        "title": "Acknowledgements",
+        "content": "This research was supported by the Vector Institute, the Canada CIFAR AI Chairs program, a grant from Schmidt Futures, an NSERC Discovery Grant, the Center for AI Safety Compute Cluster, and a generous donation from Rafael Cosman. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the sponsors. We also thank Rach Pradhan, and members in our labs at the University of British Columbia and Imperial College London, namely Aaron Dharna, Arthur Braida, Ben Norman, Cong Lu, Gabriel Béna, Luca Grillotti, and Shengran Hu, for insightful discussions and feedback."
+      }
+    ]
+  }
+  
