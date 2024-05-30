@@ -14,30 +14,15 @@ export function SocketIdentifier() {
   const [connected, setConnected] = useState(false);
   const [levelFinished, setLevelFinishedToast] = useState(false); // State to track if the next level toast has been shown
   const [newSocket, setSocket] = useState<Socket | null>(null);
-const [nextLevel, setNextLevelToastShown] = useState(false);
-  // let socket: Socket;
-  // useEffect(() => {
-  //   // This side effect reacts to the change in level completion status.
-  //   if (nextLevel) {
-  //     // Show the toast for level completion.
-  //     toast({
-  //       title: "You've finished the first level!",
-  //       duration: 900000, // 15 minutes or any desired duration
-  //       description: 'You have reached the next level. Prepare for new challenges!',
-  //       action: (
-  //         <ToastAction altText="Dismiss">Dismiss</ToastAction>
-  //       ),
-  //     });
-  //   }
-  // }, [nextLevel, toast]);
+
   useEffect(() => {
     // This side effect reacts to the change in level completion status.
     if (levelFinished) {
       // Show the toast for level completion.
       toast({
-        title: "You've finished the first level!",
-        duration:3000, // 15 minutes or any desired duration
-        description: 'You have reached the next level. Prepare for new challenges!',
+        title: "Level Completed",
+        duration: 6000,
+        description: 'Prepare for new challenges!',
         action: (
           <ToastAction altText="Dismiss">Dismiss</ToastAction>
         ),
@@ -48,23 +33,11 @@ const [nextLevel, setNextLevelToastShown] = useState(false);
 
     const socket = io(process.env.NEXT_PUBLIC_API_URL!);
     setSocket(socket);
-    
     // socket = io(process.env.NEXT_PUBLIC_API_URL!, {
     //   // Add any options here
     // });
     console.log(process.env.NEXT_PUBLIC_API_URL!);
-    // socket.on('connect', () => {
-    //   console.log('Connected to Socket.IO server');
-    //   setConnected(true);
-    //   // Show the toast notification on connect
-    //   toast({
-    //     title: 'Socket Connection Established',
-    //     description: 'You are now connected to the server.',
-    //     action: (
-    //       <ToastAction altText="See connection details">Details</ToastAction>
-    //     ),
-    //   });
-    // });
+
     socket.on('connect', () => {
       console.log('Connected to Socket.IO server');
       setConnected(true);
@@ -73,6 +46,7 @@ const [nextLevel, setNextLevelToastShown] = useState(false);
       console.log('Disconnected from Socket.IO server');
       setConnected(false);
     });
+
     socket.on('env_description', (data: EnvDescriptionEvent) => {
       toast({
         className: 'text-4xl ',
@@ -82,60 +56,25 @@ const [nextLevel, setNextLevelToastShown] = useState(false);
             <div key={index}>{line}<br/></div>
           )
         )}</div>,
-        duration: 40000,
+        duration: 30000,
         action: (
           <ToastAction altText="View details" >Close</ToastAction>
         ),
       });
     });
+
     socket.on('reset_message',()=>{
       setLevelFinishedToast(false);
     })
+
     socket.on('level_complete', () => {
-      console.log('Level completed')
-      // Show a toast notification about starting the next level
-      // console.log(levelFinished)
-      // if (!levelFinished) {
-      //   toast({
-      //     title: 'Next Level!',
-      //     duration:900000,
-      //     description: 'You have reached the next level. Prepare for new challenges!',
-      //     action: (
-      //       <ToastAction altText="View level details">Level Details</ToastAction>
-      //     ),
-      //   });
-      //   // Mark the toast as shown
-        setLevelFinishedToast(true);
-      // }
-
-
- 
-
+      console.log('Level completed');
+      setLevelFinishedToast(true);
     });
 
     socket.on('next_level', () => {
-      // console.log('Next level message received')
-      // Show a toast notification about starting the next level
-      // console.log(levelFinished)
-      // if (!levelFinished) {
-      //   toast({
-      //     title: 'Next Level!',
-      //     duration:900000,
-      //     description: 'You have reached the next level. Prepare for new challenges!',
-      //     action: (
-      //       <ToastAction altText="View level details">Level Details</ToastAction>
-      //     ),
-      //   });
-      //   // Mark the toast as shown
-        setNextLevelToastShown(true);
-      // }
-
-
- 
-
+        setLevelFinishedToast(false);
     });
-
-
 
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -180,20 +119,22 @@ const [nextLevel, setNextLevelToastShown] = useState(false);
       socket.off('connect');
       socket.off('disconnect');
       socket.off('level_complete');
+      socket.off('next_level');
+      socket.off('reset_message');
       socket.off('env_description'); // Clean up the listener
       socket.close();
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [connected, toast]); // Include 'toast' in the dependency array to ensure it's captured by useEffect
+
   const handleNextLevel = () => {
     newSocket?.emit('next_level');
+    newSocket?.emit('reset');
+  };
+  const handleReset = () => {
+    newSocket?.emit('reset');
   };
 
-  const handleReset = () => {
-    // setLevelFinishedToast(false);
-    newSocket?.emit('reset');
- 
-  };
   return (
     <div className="flex flex-col md:flex-row">
     <div className="flex-shrink-0 mb-8 md:mr-8 max-w-xs overflow-hidden">
