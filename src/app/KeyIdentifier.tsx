@@ -153,12 +153,12 @@ const [nextLevel, setNextLevelToastShown] = useState(false);
 
         case 'a':
         case 'ArrowLeft':
-          action = 3; // Rotate counterclockwise
+          action = 4; // Rotate counterclockwise
           break;
 
         case 'd':
         case 'ArrowRight':
-          action = 4; // Rotate clockwise
+          action = 3; // Rotate clockwise
           break;
 
         case 'm':
