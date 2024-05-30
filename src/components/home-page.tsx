@@ -9,8 +9,8 @@ export function HomePage() {
           <div id="game-interface" className="aspect-[16/9] w-full overflow-hidden rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold mb-4">Game Interface (coming soon!)</h2>
             {/* <video className="w-full h-full object-cover rounded-md bg-gray-100 dark:bg-gray-800" controls> */}
-            {/* <img src="http://localhost:3005/video_feed" alt="Game Stream"  className="w-full h-full border-rad object-cover rounded-md bg-gray-100 dark:bg-gray-800" /> */}
-            <img src="/placeholder.svg" alt="Game Stream"  className="w-full h-full border-rad object-cover rounded-md bg-gray-100 dark:bg-gray-800" />
+            <img src="http://localhost:3005/video_feed" alt="Game Stream"  className="w-full h-full border-rad object-cover rounded-md bg-gray-100 dark:bg-gray-800" />
+            {/* <img src="/placeholder.svg" alt="Game Stream"  className="w-full h-full border-rad object-cover rounded-md bg-gray-100 dark:bg-gray-800" /> */}
               Your browser does not support the video tag.
             {/* </video> */}
           </div>
