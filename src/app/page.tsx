@@ -30,7 +30,7 @@ export default function Home() {
         <SheetContent side="right">
           <div className="grid gap-4 p-4">
             <Link href="/">Home</Link>
-            <Link href="/waitlist">Waitlist (coming soon)</Link>
+            <Link href="/waitlist">Waitlist</Link>
           </div>
         </SheetContent>
       </Sheet>
