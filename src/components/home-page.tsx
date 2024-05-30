@@ -7,7 +7,8 @@ export function HomePage() {
       <main className="flex flex-1 w-full flex-col items-center justify-center p-4">
         <div className="flex w-full max-w-7xl flex-col items-center justify-center gap-4">
           <div id="game-interface" className="aspect-[16/9] w-full overflow-hidden rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">Game Interface (coming soon!)</h2>
+            <h2 className="text-2xl font-bold mb-4">Game Interface (for human players!)</h2>
+            <p className="text-gray-900 dark:text-gray-400">The game&apos;s resolution is optimized for smoother and faster rendering.</p>
             {/* <video className="w-full h-full object-cover rounded-md bg-gray-100 dark:bg-gray-800" controls> */}
             <img src="http://localhost:3005/video_feed" alt="Game Stream"  className="w-full h-full border-rad object-cover rounded-md bg-gray-100 dark:bg-gray-800" />
             {/* <img src="/placeholder.svg" alt="Game Stream"  className="w-full h-full border-rad object-cover rounded-md bg-gray-100 dark:bg-gray-800" /> */}

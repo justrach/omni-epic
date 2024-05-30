@@ -14,7 +14,7 @@ const icons = [
   { IconComponent: CodeIcon, label: 'Code (Coming soon)', href: '', target: '_blank' },
   // { IconComponent: DatabaseIcon, label: 'Data', href: '', target: '_blank' },
   { IconComponent: XIcon, label: 'Tweet', href: 'https://twitter.com/jeffclune/status/1795787632435212732', target: '_blank' },
-  { IconComponent: IoGameController, label: 'Play it yourself! (Coming soon)', href: '#game-interface', target: '_self' },
+  { IconComponent: IoGameController, label: 'Play it yourself!', href: '#game-interface', target: '_self' },
 ];
 
 export function HeaderComponent() {
