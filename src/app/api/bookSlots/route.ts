@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     const { slotId, username, email } = await request.json();
 
     // Send the booking request to your backend API
-    const response = await axios.post('https://api.boopr.xyz/bookSlot1', {
+    const response = await axios.post('https://api.boopr.xyz/bookSlot', {
       slotId,
       username,
       email,

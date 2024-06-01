@@ -39,7 +39,7 @@ export function SocketIdentifier() {
     // socket = io(process.env.NEXT_PUBLIC_API_URL!, {
     //   // Add any options here
     // });
-    console.log(process.env.NEXT_PUBLIC_API_URL!);
+    // console.log(process.env.NEXT_PUBLIC_API_URL!);
 
     socket.on('connect', () => {
       console.log('Connected to Socket.IO server');
