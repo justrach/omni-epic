@@ -110,7 +110,7 @@ export function SocketIdentifier() {
           return;
       }
       if (connected && action !== undefined) {
-        socket.emit('action', { action, accessCode });
+        socket.emit('action', { action });
       }
     };
 
