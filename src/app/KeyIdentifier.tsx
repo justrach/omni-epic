@@ -7,14 +7,16 @@ import { Button } from "@/components/ui/button"
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 import { ToastDemo } from '@/components/ui/connected/toast';
-import { EnvDescriptionEvent } from '../../types/socket_types';
+import { AccessGranted, EnvDescriptionEvent } from '../../types/socket_types';
 import { ResetAlertDialog } from '@/components/ui/next_level/button_level';
+import Link from 'next/link';
 export function SocketIdentifier() {
   const { toast } = useToast()
   const [connected, setConnected] = useState(false);
   const [levelFinished, setLevelFinishedToast] = useState(false); // State to track if the next level toast has been shown
   const [newSocket, setSocket] = useState<Socket | null>(null);
   const [accessCode, setAccessCode] = useState('');
+  const [accessGranted, setAccessGranted] = useState(false);
 
   useEffect(() => {
     // This side effect reacts to the change in level completion status.
@@ -77,6 +79,30 @@ export function SocketIdentifier() {
       setLevelFinishedToast(false);
     });
 
+    socket.on('access_granted', (data: AccessGranted) => {
+      if(data.granted===true){
+        toast({
+          className: 'text-4xl ',
+          title: 'You are now controlling the robot!',
+          description: <div>Happy playing :-&#41;</div>,
+          duration: 3000,
+          action: (
+            <ToastAction altText="View details" >Close</ToastAction>
+          ),
+        });
+      }
+      else{
+        toast({
+          className: 'text-4xl ',
+          title: 'Please get a timeslot at the waitlist:',
+          description: <div><Link href="/waitlist" className="text-purple-500 underline">Click me!</Link></div>,
+          duration: 3000,
+          action: (
+            <ToastAction altText="View details" >Close</ToastAction>
+          ),
+        });
+      }
+    });
 
     const handleKeyDown = (event: KeyboardEvent) => {
       let action;
