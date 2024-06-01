@@ -14,6 +14,7 @@ export function SocketIdentifier() {
   const [connected, setConnected] = useState(false);
   const [levelFinished, setLevelFinishedToast] = useState(false); // State to track if the next level toast has been shown
   const [newSocket, setSocket] = useState<Socket | null>(null);
+  const [accessCode, setAccessCode] = useState('');
 
   useEffect(() => {
     // This side effect reacts to the change in level completion status.
@@ -73,7 +74,7 @@ export function SocketIdentifier() {
     });
 
     socket.on('next_level', () => {
-        setLevelFinishedToast(false);
+      setLevelFinishedToast(false);
     });
 
 
@@ -109,7 +110,7 @@ export function SocketIdentifier() {
           return;
       }
       if (connected && action !== undefined) {
-        socket.emit('action', { action });
+        socket.emit('action', { action, accessCode });
       }
     };
 
@@ -127,6 +128,10 @@ export function SocketIdentifier() {
     };
   }, [connected, toast]); // Include 'toast' in the dependency array to ensure it's captured by useEffect
 
+  const handleAccess = () => {
+    newSocket?.emit('access_code', accessCode);
+  };
+
   const handleNextLevel = () => {
     newSocket?.emit('next_level');
     newSocket?.emit('reset');
@@ -137,9 +142,9 @@ export function SocketIdentifier() {
 
   return (
     <div className="flex flex-col md:flex-row">
-    <div className="flex-shrink-0 mb-8 md:mr-8 max-w-xs overflow-hidden">
-      <img src="/images/game_controls.png" alt="Game Controls" className="w-full h-auto object-contain" />
-    </div>
+      <div className="flex-shrink-0 mb-8 md:mr-8 max-w-xs overflow-hidden">
+        <img src="/images/game_controls.png" alt="Game Controls" className="w-full h-auto object-contain" />
+      </div>
       <div className="flex flex-grow flex-col items-center space-y-2">
         {/* <ToastDemo></ToastDemo> */}
         <div className="min-w-full">
@@ -149,8 +154,20 @@ export function SocketIdentifier() {
         <div className="min-w-full">
           <ResetAlertDialog onConfirm={handleReset}></ResetAlertDialog>
         </div>
-        {/* <button onClick={handleReset}>Reset Level</button> */}
-        {/* {levelFinished ? <div>Level completed</div> : <div>Level not completed</div>} */}
+      </div>
+      <div className="flex-shrink-0 mb-8 md:ml-8 items-center space-y-2">
+        <div className="min-w-full">
+          <input
+            type="text"
+            placeholder="Enter access code"
+            value={accessCode}
+            onChange={(e) => setAccessCode(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
+          />
+        </div>
+        <Button onClick={handleAccess} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+          Gain Access
+        </Button>
       </div>
     </div>
   );
