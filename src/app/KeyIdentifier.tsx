@@ -34,12 +34,10 @@ export function SocketIdentifier() {
   }, [levelFinished, toast]);
   useEffect(() => {
 
-    const socket = io(process.env.NEXT_PUBLIC_API_URL!);
+    const socket = io(process.env.NEXT_PUBLIC_API_URL!,{
+      transports: ['websocket', 'polling']
+    });
     setSocket(socket);
-    // socket = io(process.env.NEXT_PUBLIC_API_URL!, {
-    //   // Add any options here
-    // });
-    // console.log(process.env.NEXT_PUBLIC_API_URL!);
 
     socket.on('connect', () => {
       console.log('Connected to Socket.IO server');
