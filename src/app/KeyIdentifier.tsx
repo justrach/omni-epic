@@ -17,6 +17,8 @@ export function SocketIdentifier() {
   const [newSocket, setSocket] = useState<Socket | null>(null);
   const [accessCode, setAccessCode] = useState('');
   const [accessGranted, setAccessGranted] = useState(false);
+  const [showAccessCode, setShowAccessCode] = useState(false);
+  const [currAccessCode, setCurrAccessCode] = useState('');
 
   useEffect(() => {
     // This side effect reacts to the change in level completion status.
@@ -102,6 +104,13 @@ export function SocketIdentifier() {
       }
     });
 
+    socket.on('show_access_code', (data: { show: boolean; accessCode: string }) => {
+      setShowAccessCode(data.show);
+      if (data.show) {
+        setCurrAccessCode(data.accessCode);
+      }
+    });
+
     const handleKeyDown = (event: KeyboardEvent) => {
       let action;
       switch (event.key) {
@@ -146,6 +155,8 @@ export function SocketIdentifier() {
       socket.off('level_complete');
       socket.off('next_level');
       socket.off('reset_message');
+      socket.off('access_granted');
+      socket.off('show_access_code');
       socket.off('env_description'); // Clean up the listener
       socket.close();
       window.removeEventListener('keydown', handleKeyDown);
@@ -179,19 +190,25 @@ export function SocketIdentifier() {
           <ResetAlertDialog onConfirm={handleReset}></ResetAlertDialog>
         </div>
       </div>
-      <div className="flex-shrink-0 mb-8 md:ml-8 items-center space-y-2">
-        <div className="min-w-full">
+      <div className="flex-shrink-0 mb-8 md:ml-8 md:w-64">
+        <div className="space-y-2">
           <input
             type="text"
             placeholder="Enter access code"
             value={accessCode}
             onChange={(e) => setAccessCode(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
           />
+          <Button onClick={handleAccess} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+            Gain Access
+          </Button>
+          {showAccessCode && (
+            <div className="text-center">
+              <p>Since no one is controlling the robot now, use this access code:</p>
+              <p className="text-lg font-bold">{currAccessCode}</p>
+            </div>
+          )}
         </div>
-        <Button onClick={handleAccess} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
-          Gain Access
-        </Button>
       </div>
     </div>
   );
