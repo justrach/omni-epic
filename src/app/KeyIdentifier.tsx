@@ -19,6 +19,7 @@ export function SocketIdentifier() {
   const [accessGranted, setAccessGranted] = useState(false);
   const [showAccessCode, setShowAccessCode] = useState(false);
   const [currAccessCode, setCurrAccessCode] = useState('');
+  const [nextLevelLoading, setNextLevelLoading] = useState(false);
 
   useEffect(() => {
     // This side effect reacts to the change in level completion status.
@@ -66,12 +67,11 @@ export function SocketIdentifier() {
       });
     });
 
-    socket.on('reset_message',()=>{
+    socket.on('reset_message', ()=>{
       setLevelFinishedToast(false);
     })
 
     socket.on('level_complete', () => {
-      console.log('Level completed');
       setLevelFinishedToast(true);
     });
 
@@ -133,6 +133,10 @@ export function SocketIdentifier() {
           <ToastAction altText="View details" >Close</ToastAction>
         ),
       });
+    });
+
+    socket.on('generating_next_level', (data: { generating: boolean }) => {
+      setNextLevelLoading(data.generating);
     });
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -217,13 +221,26 @@ export function SocketIdentifier() {
         <div className="min-w-full">
           {connected ? <Connected></Connected> : <NotConnected></NotConnected>}
         </div>
-        <Button onClick={handleNextLevel} className="w-full">Next Level</Button>
+        <Button
+          onClick={handleNextLevel}
+          className="w-full"
+          disabled={nextLevelLoading}
+        >
+          {nextLevelLoading ? (
+            <div className="flex items-center justify-center">
+              <span className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-purple-500 mr-2"></span>
+              <span>Generating next level...</span>
+            </div>
+          ) : (
+            'Next Level'
+          )}
+        </Button>
         <div className="min-w-full">
           <ResetAlertDialog onConfirm={handleReset}></ResetAlertDialog>
         </div>
         <br/>
-        <Button onClick={markSuccess} className="w-full bg-green-800 hover:bg-green-600 text-white">Mark Success</Button>
-        <Button onClick={markFailure} className="w-full bg-red-800 hover:bg-red-600 text-white">Mark Failure</Button>
+        <Button onClick={markSuccess} className="w-full bg-green-300 hover:bg-green-600 text-green-900 hover:text-white">Mark Success</Button>
+        <Button onClick={markFailure} className="w-full bg-red-300 hover:bg-red-600 text-red-900 hover:text-white">Mark Failure</Button>
       </div>
       <div className="flex-shrink-0 mb-8 md:ml-8 md:w-64">
         <div className="space-y-2">
@@ -234,7 +251,7 @@ export function SocketIdentifier() {
             onChange={(e) => setAccessCode(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
           />
-          <Button onClick={handleAccess} className="w-full bg-purple-800 hover:bg-purple-600 text-white">
+          <Button onClick={handleAccess} className="w-full bg-purple-600 hover:bg-purple-400 text-white">
             Gain Access
           </Button>
           {showAccessCode && (
