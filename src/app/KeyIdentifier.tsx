@@ -201,12 +201,20 @@ export function SocketIdentifier() {
     newSocket?.emit('next_level');
     newSocket?.emit('reset');
   };
+
+  const handlePrevLevel = () => {
+    newSocket?.emit('prev_level');
+    newSocket?.emit('reset');
+  }
+
   const handleReset = () => {
     newSocket?.emit('reset');
   };
+
   const markSuccess = () => {
     newSocket?.emit('mark_success');
   };
+
   const markFailure = () => {
     newSocket?.emit('mark_failure');
   };
@@ -235,6 +243,7 @@ export function SocketIdentifier() {
             'Next Level'
           )}
         </Button>
+        <Button onClick={handlePrevLevel} className="w-full bg-slate-500 hover:bg-slate-800 text-white">Prev Level</Button>
         <div className="min-w-full">
           <ResetAlertDialog onConfirm={handleReset}></ResetAlertDialog>
         </div>
