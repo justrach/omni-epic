@@ -111,6 +111,30 @@ export function SocketIdentifier() {
       }
     });
 
+    socket.on('success_marked', () => {
+      toast({
+        className: 'text-4xl ',
+        title: 'Level marked as success.',
+        description: <div>Go to the next level!</div>,
+        duration: 3000,
+        action: (
+          <ToastAction altText="View details" >Close</ToastAction>
+        ),
+      });
+    });
+
+    socket.on('failure_marked', () => {
+      toast({
+        className: 'text-4xl ',
+        title: 'Level marked as failed.',
+        description: <div>Go to the next level!</div>,
+        duration: 3000,
+        action: (
+          <ToastAction altText="View details" >Close</ToastAction>
+        ),
+      });
+    });
+
     const handleKeyDown = (event: KeyboardEvent) => {
       let action;
       switch (event.key) {
@@ -157,6 +181,8 @@ export function SocketIdentifier() {
       socket.off('reset_message');
       socket.off('access_granted');
       socket.off('show_access_code');
+      socket.off('success_marked');
+      socket.off('failure_marked');
       socket.off('env_description'); // Clean up the listener
       socket.close();
       window.removeEventListener('keydown', handleKeyDown);
@@ -174,6 +200,12 @@ export function SocketIdentifier() {
   const handleReset = () => {
     newSocket?.emit('reset');
   };
+  const markSuccess = () => {
+    newSocket?.emit('mark_success');
+  };
+  const markFailure = () => {
+    newSocket?.emit('mark_failure');
+  };
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -189,6 +221,9 @@ export function SocketIdentifier() {
         <div className="min-w-full">
           <ResetAlertDialog onConfirm={handleReset}></ResetAlertDialog>
         </div>
+        <br/>
+        <Button onClick={markSuccess} className="w-full bg-green-800 hover:bg-green-600 text-white">Mark Success</Button>
+        <Button onClick={markFailure} className="w-full bg-red-800 hover:bg-red-600 text-white">Mark Failure</Button>
       </div>
       <div className="flex-shrink-0 mb-8 md:ml-8 md:w-64">
         <div className="space-y-2">
@@ -199,7 +234,7 @@ export function SocketIdentifier() {
             onChange={(e) => setAccessCode(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
           />
-          <Button onClick={handleAccess} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+          <Button onClick={handleAccess} className="w-full bg-purple-800 hover:bg-purple-600 text-white">
             Gain Access
           </Button>
           {showAccessCode && (
