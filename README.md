@@ -1,5 +1,7 @@
 # OMNI-EPIC Website Template
 
+https://omni-epic.vercel.app/
+
 ## Installation
 Ensure that you have NodeJS installed(https://nodejs.org/en/download/)  
 Ensure that you have bun installed as well(https://bun.sh)  
