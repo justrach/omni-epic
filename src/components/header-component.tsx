@@ -11,7 +11,7 @@ const icons = [
   { IconComponent: FileTextIcon, label: 'Paper', href: 'https://arxiv.org/abs/2405.15568', target: '_blank' },
   // { IconComponent: XIcon, label: 'arXiv', href: '', target: '_blank' },
   // { IconComponent: VideoIcon, label: 'Video', href: '', target: '_blank' },
-  { IconComponent: CodeIcon, label: 'Code (Coming soon)', href: '', target: '_blank' },
+  { IconComponent: CodeIcon, label: 'Code', href: 'https://github.com/maxencefaldor/omni-epic', target: '_blank' },
   // { IconComponent: DatabaseIcon, label: 'Data', href: '', target: '_blank' },
   { IconComponent: XIcon, label: 'Tweet', href: 'https://twitter.com/jeffclune/status/1795787632435212732', target: '_blank' },
   { IconComponent: IoGameController, label: 'Play it yourself!', href: '#game-interface', target: '_self' },
